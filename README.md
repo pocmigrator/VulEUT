@@ -1,4 +1,4 @@
-# VulnExV
+# VulEUT
 > This tool aims to help you verify **the potential vulnerability exploitation risk** of third-party libraries used in your project.
 > 
 **Paper: Automated Vulnerability Exploitation Verification for Third-party Library Dependencies in Client Software**
