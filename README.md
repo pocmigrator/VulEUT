@@ -4,7 +4,24 @@
 - [Project Structure](#Project Structure)
 
 ## Description
-> Open-source third-party libraries are widely used in modern software development. These libraries offer substantial advantages in terms of time and resource savings. However, a significant concern arises due to the continuous appearance of publicly disclosed vulnerabilities within these libraries. Existing automated vulnerability detection tools often suffer from false positives and fail to accurately assess the propagation of inputs capable of triggering vulnerabilities from client projects to vulnerable code. In this paper, we propose a novel approach called VulEUT (Vulnerability Exploit Unit Test Generation), which combines vulnerability exploitation reachability analysis and LLM-based unit test generation. VulEUT is designed to automatically verify the exploitability of vulnerabilities in third-party libraries commonly used in client software projects. VulEUT first analyzes the client projects to determine the reachability of vulnerability conditions within them. Subsequently, it leverages the Large Language Model (LLM) to autonomously generate unit tests for vulnerability verification. To evaluate VulEUT’s performance, we collect vulnerabilities from various third-party libraries and conduct experiments on 48 real client projects. Besides, we also compare our approach with the representative tool TRANSFER. Our results demonstrate the effectiveness of VulEUT, with 178 out of 210 generated unit tests successfully confirming vulnerability exploitation across 42 client projects, exceeding the baseline by more than 7 times.
+> Open-source third-party libraries are widely used in modern software development. These libraries offer substantial advantages in
+terms of time and resource savings. However, a significant concern arises due to the continuous appearance of publicly disclosed
+vulnerabilities within these libraries. Existing automated vulnerability detection tools often suffer from false positives and fail to
+accurately assess the propagation of inputs capable of triggering
+vulnerabilities from client projects to vulnerable code. In this paper,
+we propose a novel approach called VulEUT (Vulnerability Exploit
+Unit Test Generation), which combines vulnerability exploitation
+reachability analysis and LLM-based unit test generation. VulEUT
+is designed to automatically verify the exploitability of vulnerabilities in third-party libraries commonly used in client software
+projects. VulEUT first analyzes the client projects to determine the
+reachability of vulnerability conditions within them. Subsequently,
+it leverages the Large Language Model (LLM) to autonomously generate unit tests for vulnerability verification. To evaluate VulEUT’s
+performance, we collect vulnerabilities from various third-party
+libraries and conduct experiments on 48 real client projects. Besides, we also compare our approach with the representative tool
+TRANSFER. Our results demonstrate the effectiveness of VulEUT,
+with 178 out of 210 generated unit tests successfully confirming
+vulnerability exploitation across 42 client projects, exceeding the
+baseline by more than 7 times.
 
 ## Project Structure
 ```css
