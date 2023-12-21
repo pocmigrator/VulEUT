@@ -40,6 +40,7 @@ VulEUT
 │       ├── prompt - Generates specific prompts.
 │       └── processor - Includes logic for source code analysis, prompt generation, test generation, etc.
 ├── test  - Project test files.
+├── python  - GPT test generation.
 └── resources - Project configuration files, including scanned client projects,  etc.
 ```
 
