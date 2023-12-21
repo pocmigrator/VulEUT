@@ -2,6 +2,9 @@
 > This is the basic implementation of our submission in ISSTA 2024: Test Guided Exploitability Verification of Library Vulnerabilities.
 - [Description](#Description)
 - [Project Structure](#Project Structure)
+- [Datasets](#Datasets)
+- [Method](#Method)
+- [Usage](#Usage)
 
 ## Description
 > Open-source third-party libraries are widely used in modern software development. These libraries offer substantial advantages in
@@ -85,8 +88,3 @@ Place the generated test files and the `MethodCallInterceptor` into the target p
 
 
 > If unit test code for exploiting vulnerabilities has been generated and the generated unit tests pass when executed in the client's project, it indicates that the project is currently at risk of exploitation.
-
-
-## Files
-src: source code
-dataset: project-list, result
