@@ -73,8 +73,6 @@ A generated test may look like this:
     // Verify if a call to the XStream.fromXML method was triggered
     assertTrue(MethodCallInterceptor.isTrigger);
 }
-
-
 ```
 
 ## Usage
