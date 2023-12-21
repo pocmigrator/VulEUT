@@ -44,10 +44,14 @@ VulEUT
 ```
 
 ## Datasets
+Complete dataset：[Table](https://github.com/pocmigrator/VulEUT/tree/main/dataset/tables)
 
+| TPL     | CVE_ID        | client project | call path num | tests | compile tests | pass tests |
+|---------|---------------|----------------|---------------|-------|---------------|------------|
+| Xstream | CVE-2017-7957 | Lion           | 4             | 8     | 8             | 7          |
 
 ## Method
-> The implementation process of this method can be summarized as follows: first, perform code analysis on your project, and then attempt to generate unit tests that can exploit vulnerabilities in third-party libraries. If the test code is successfully generated, it indicates that you should be cautious, as your project may now be exposed to vulnerability exploitation risks. It is recommended to manually verify and address vulnerabilities in third-party libraries, such as upgrading library dependencies. 😄
+> The implementation process of this method can be summarized as follows: first, perform code analysis on your project, and then attempt to generate unit tests that can exploit vulnerabilities in third-party libraries. If the test code is successfully generated, it indicates that you should be cautious, as your project may now be exposed to vulnerability exploitation risks. It is recommended to manually verify and address vulnerabilities in third-party libraries, such as upgrading library dependencies. 
 
   
 ![pipeline-markdown.png](pipeline-markdown.png)   
