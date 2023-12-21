@@ -1,9 +1,21 @@
 # VulEUT
 > This tool aims to help you verify **the potential vulnerability exploitation risk** of third-party libraries used in your project.
 > 
-**Paper: Automated Vulnerability Exploitation Verification for Third-party Library Dependencies in Client Software**
-
-
+```css
+VulEUT
+├── dataset  - Experimental data
+│   ├── tables - Result data, including project names used, experimental results, etc.
+│   └── output - Contains client projects, CVE IDs, generated prompts, and unit test files.
+├── src  - Project source code
+│   ├── antlr - Toolkit for generating AST.
+│   ├── utils - Common utilities for logging, JSON, file operations, etc.
+│   └── core
+│       ├── entity - Includes call graph, Prompt model, project source code structure, etc.
+│       ├── prompt - Generates specific prompts.
+│       └── processor - Includes logic for source code analysis, prompt generation, test generation, etc.
+├── test  - Project test files
+└── resources - Project configuration files, including scanned client projects, third-party library vulnerability information, etc.
+```
 ## Abstract
 > In modern software development, open-source third-party libraries are widely used. These libraries offer
 substantial advantages in terms of time and resource savings. However, a significant concern arises due to
