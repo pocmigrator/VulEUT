@@ -1,7 +1,7 @@
 # VulEUT
 > This is the basic implementation of our submission in ISSTA 2024: Test Guided Exploitability Verification of Library Vulnerabilities.
 - [Description](#Description)
-- [Project Structure](#Project Structure)
+- [Project Structure](#Project%20Structure)
 - [Datasets](#Datasets)
 - [Method](#Method)
 - [Usage](#Usage)
