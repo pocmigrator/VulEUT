@@ -24,20 +24,20 @@ vulnerability exploitation across 42 client projects, exceeding the
 baseline by more than 7 times.
 
 ## Project Structure
-```css
+```
 VulEUT
-├── dataset  - Experimental data
-│   ├── tables - Result data, including project names used, experimental results, etc.
-│   └── output - Contains client projects, CVE IDs, generated prompts, and unit test files.
-├── src  - Project source code
+├── dataset  - Experimental data.
+│   ├── tables - Result data, including experimental results, etc.
+│   └── output - Contains client projects, CVE IDs, generated prompts, and unit tests.
+├── src  - Project source code.
 │   ├── antlr - Toolkit for generating AST.
-│   ├── utils - Common utilities for logging, JSON, file operations, etc.
+│   ├── utils - Common utilities for logging, file operations, etc.
 │   └── core
-│       ├── entity - Includes call graph, Prompt model, project source code structure, etc.
+│       ├── entity - Includes prompt model, project source code structure, etc.
 │       ├── prompt - Generates specific prompts.
 │       └── processor - Includes logic for source code analysis, prompt generation, test generation, etc.
-├── test  - Project test files
-└── resources - Project configuration files, including scanned client projects, third-party library vulnerability information, etc.
+├── test  - Project test files.
+└── resources - Project configuration files, including scanned client projects,  etc.
 ```
 
 ## Datasets
