@@ -23,7 +23,7 @@ public class XmlUtilTest {
             e.printStackTrace();
         }
         // Verify if a call to the XStream.fromXML method was triggered
-        assertTrue(MethodCallInterceptor.isTriggered());
+assertTrue(MethodCallInterceptor.isTriggered());
 assertTrue(MethodCallInterceptor.isConditionMet());
     }
 
@@ -50,7 +50,7 @@ assertTrue(MethodCallInterceptor.isConditionMet());
         }
 
         // Assert that the vulnerability was successfully triggered
-        assertTrue(MethodCallInterceptor.isTriggered());
+assertTrue(MethodCallInterceptor.isTriggered());
 assertTrue(MethodCallInterceptor.isConditionMet());
     }
 }

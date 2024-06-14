@@ -34,5 +34,5 @@ org.apache.commons.io.FilenameUtils.normalize.class,"normalize", new Object[]{in
 );
 
 The assert statement to verify that the vulnerability was successfully triggered is fixed as:
-assertTrue(MethodCallInterceptor.isTriggered);
-assertTrue(MethodCallInterceptor.areConditionsMet);
+assertTrue(MethodCallInterceptor.isTriggered());
+assertTrue(MethodCallInterceptor.isConditionMet());

@@ -24,7 +24,7 @@ public class ValidatorTest {
         }
 
         // Assert that the vulnerability was successfully triggered
-        assertTrue(MethodCallInterceptor.isTriggered());
+assertTrue(MethodCallInterceptor.isTriggered());
 assertTrue(MethodCallInterceptor.isConditionMet());
     }
 }

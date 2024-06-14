@@ -28,7 +28,7 @@ public class PlanServletTest {
         servlet.doGet(req, resp);
 
         // Verify that the vulnerability was triggered by checking MethodCallInterceptor.isTrigger
-        assertTrue(MethodCallInterceptor.isTriggered());
+assertTrue(MethodCallInterceptor.isTriggered());
 assertTrue(MethodCallInterceptor.isConditionMet());
 
         // Verify that PrintWriter is closed after the catch

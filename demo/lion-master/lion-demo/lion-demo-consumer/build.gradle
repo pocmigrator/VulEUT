@@ -1,0 +1,87 @@
+/**
+ *   Copyright 2019 Yanzheng (https://github.com/micyo202). All rights reserved.
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+group 'com.lion.demo.consumer'
+description '服务消费者demo'
+
+apply plugin: 'application'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'com.bmuschko.docker-spring-boot-application'
+
+mainClassName = 'com.lion.demo.consumer.ConsumerDemoApplication'
+
+ext {
+    set('apnsVersion', "1.0.0.Beta6")
+}
+
+dependencies {
+    implementation project(':lion-common')
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
+
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel'
+
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-seata'
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-stream-rabbit'
+
+    // 使用 Skywalking 时，依赖 spring-cloud-starter-sleuth 即可
+    //implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+    // 使用 Zipkin 时，依赖 spring-cloud-starter-zipkin 即可
+    implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
+
+    //implementation 'org.springframework.boot:spring-boot-configuration-processor'
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-oauth2'
+
+    runtimeOnly 'mysql:mysql-connector-java'
+    implementation 'com.alibaba:druid-spring-boot-starter'
+    implementation 'com.baomidou:mybatis-plus-boot-starter'
+    implementation 'com.baomidou:mybatis-plus-generator'
+    implementation 'org.apache.velocity:velocity-engine-core'
+
+    implementation 'com.github.pagehelper:pagehelper-spring-boot-starter'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    implementation 'com.github.xiaoymin:knife4j-spring-boot-starter'
+
+    // 苹果推送APNS
+    testImplementation "com.notnoop.apns:apns:${apnsVersion}"
+}
+
+docker {
+    registryCredentials {
+        url = "${dockerUrl}"
+        username = "${dockerUsername}"
+        password = "${dockerPassword}"
+        email = "${dockerEmail}"
+    }
+    springBootApplication {
+        baseImage = "${dockerBaseImage}"
+        maintainer = "${dockerMaintainer}"
+        ports = [8701]
+        images = ["micyo202/${project.name}:${project.version}"]
+        jvmArgs = ['-Dspring.profiles.active=$env', '-Djava.security.egd=file:/dev/./urandom', '-Xmx512m']
+        mainClassName = "${project.mainClassName}"
+    }
+}

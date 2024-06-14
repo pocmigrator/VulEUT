@@ -7,36 +7,30 @@ Only the function under test statement is wrapped by a try catch statement(Exclu
 The code corresponds to the function being tested, with context information, for example: 
 
 The source code of the function under test is (The unit test should test this function):
-public static boolean extract ( Context context , String assetFile , File destination ) { try { return extract ( context . getAssets ( ) . open ( assetFile ) , destination ) ; } catch ( IOException e ) { return false ; } } 
+public static < T > T xml2Obj ( File xml , Class < T > clazz ) { return xml2Obj ( xml , clazz , clazz . getSimpleName ( ) ) ; } 
 
 and the class name of the function under test is:
-TarXZUtils
+XmlUtil
 
 There is a method call chain from the function under test to the function called by the vulnerability code, the list of functions is:
-extract
-extract
+xml2Obj
+xml2Obj
 Where there is a vulnerability code call function source code is (This function is used to help you understand):
-private static boolean extract ( InputStream source , File destination ) { if ( source == null ) return false ; try ( InputStream inStream = new XZCompressorInputStream ( source ) ; ArchiveInputStream tar = new TarArchiveInputStream ( inStream ) ) { TarArchiveEntry entry ; while ( ( entry = ( TarArchiveEntry ) tar . getNextEntry ( ) ) != null ) { if ( ! tar . canReadEntryData ( entry ) ) continue ; File file = new File ( destination , entry . getName ( ) ) ; if ( entry . isDirectory ( ) ) { if ( ! file . isDirectory ( ) ) file . mkdirs ( ) ; } else { if ( entry . isSymbolicLink ( ) ) { FileUtils . symlink ( entry . getLinkName ( ) , file . getAbsolutePath ( ) ) ; } else { try ( BufferedOutputStream outStream = new BufferedOutputStream ( new FileOutputStream ( file ) , StreamUtils . BUFFER_SIZE ) ) { if ( ! StreamUtils . copy ( tar , outStream ) ) return false ; } } } FileUtils . chmod ( file , 0771 ) ; } return true ; } catch ( IOException e ) { return false ; } } 
+public static < T > T xml2Obj ( File xml , Class < T > clazz , String rootElement ) { XStream xStream = getInstance ( ) ; xStream . processAnnotations ( clazz ) ; xStream . alias ( rootElement , clazz ) ; xStream . ignoreUnknownElements ( ) ; Object object = xStream . fromXML ( xml ) ; return clazz . cast ( object ) ; } 
 
 and the class name of this function is:
-TarXZUtils
+XmlUtil
 
 The vulnerable third-party library function and the class to which the function belongs are:
-class name:TarArchiveInputStream
-method name:TarArchiveInputStream
+class name:XStream
+method name:fromXML
 
 The input1 variable name for this unit test is "input1", and the value of this "input1" is:
-compress/CVE-2018-1324/demo/difflist_fsbwserver.f-secure.com_80_583109529_2.tar
-
-The input2 variable name for this unit test is "input2", and the value of this "input2" is:
- source/ 
-
-The input3 variable name for this unit test is "input3", and the value of this "input3" is:
- target
+<void>
 
 After declaring test input data, you need to call the following statement:
 MethodCallInterceptor.interceptor(
-TarArchiveInputStream.class,"TarArchiveInputStream", new Object[]{input}
+com.thoughtworks.xstream.XStream.class,"fromXML", new Object[]{input}
 );
 
 The assert statement to verify that the vulnerability was successfully triggered is fixed as:

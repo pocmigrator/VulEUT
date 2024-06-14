@@ -1,0 +1,53 @@
+/**
+ *   Copyright 2019 Yanzheng (https://github.com/micyo202). All rights reserved.
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+group 'com.lion.common'
+description '公共模块'
+
+configurations {
+    implementation.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-undertow'
+    implementation.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-log4j2'
+    implementation.exclude group: 'com.fasterxml.jackson.dataformat', module: 'jackson-dataformat-yaml'
+    testImplementation.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-test'
+}
+
+dependencies {
+    implementation 'org.apache.commons:commons-lang3'
+    implementation "org.apache.commons:commons-collections4"
+
+    implementation 'com.thoughtworks.xstream:xstream'
+
+    implementation 'org.apache.httpcomponents:httpclient'
+
+    compileOnly 'javax.servlet:javax.servlet-api'
+
+    implementation 'org.bouncycastle:bcprov-jdk15on'
+
+    compileOnly 'com.baomidou:mybatis-plus-boot-starter'
+    compileOnly 'com.github.pagehelper:pagehelper-spring-boot-starter'
+
+    compileOnly 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.redisson:redisson'
+
+    compileOnly 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    compileOnly 'org.springframework.cloud:spring-cloud-starter-oauth2'
+    compileOnly 'org.springframework.cloud:spring-cloud-stream'
+
+    compileOnly 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+    compileOnly 'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel'
+    compileOnly 'com.netflix.servo:servo-core'
+
+    compileOnly 'com.github.xiaoymin:knife4j-spring-boot-starter'
+}

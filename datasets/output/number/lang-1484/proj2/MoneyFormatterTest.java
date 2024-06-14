@@ -26,6 +26,6 @@ public class MoneyFormatterTest {
 
         // Verify that the vulnerability was triggered by checking MethodCallInterceptor.isTrigger
         assertTrue(MethodCallInterceptor.isTriggered());
-assertTrue(MethodCallInterceptor.isConditionMet());
+        assertTrue(MethodCallInterceptor.isConditionMet());
     }
 }

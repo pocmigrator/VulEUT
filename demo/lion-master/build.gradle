@@ -1,0 +1,185 @@
+/**
+ *   Copyright 2019 Yanzheng (https://github.com/micyo202). All rights reserved.
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+plugins {
+    id 'org.springframework.boot' version '2.2.6.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'com.bmuschko.docker-spring-boot-application' version '6.1.3'
+}
+
+allprojects {
+    version '2.0.9'
+    group 'com.lion'
+    description 'Lion project for Spring Boot / Spring Cloud / Alibaba Cloud'
+
+    apply plugin: 'io.spring.dependency-management'
+
+    repositories {
+        maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
+        maven { url "https://repo.spring.io/milestone" }
+        maven { url "https://plugins.gradle.org/m2/" }
+        mavenCentral()
+        jcenter()
+    }
+
+    ext {
+        //如果url不指定的话
+        //Mac默认：url = https://index.docker.io/v1/
+        //Unix默认: url = unix:///var/run/docker.sock
+        //Windows默认: url = tcp://127.0.0.1:2375
+        set('dockerUrl', "https://index.docker.io/v1/")
+        set('dockerUsername', "micyo202")
+        set('dockerPassword', "")
+        set('dockerEmail', "micyo202@163.com")
+        set('dockerBaseImage', "openjdk:8")
+        set('dockerMaintainer', "Yanzheng (https://github.com/micyo202)")
+
+        set('springBootVersion', "2.2.6.RELEASE")
+        set('springBootAdminVersion', "2.2.1")
+        set('springCloudVersion', "Hoxton.SR2")
+        set('springCloudAlibabaVersion', "2.2.0.RELEASE")
+
+        set('lombokVersion', "1.18.12")
+        set('junitJupiterVersion', "5.6.2")
+        set('junitPlatformLauncherVersion', "1.6.2")
+
+        set('sentinelVersion', "1.7.1")
+        set('druidVersion', "1.1.23")
+        set('mybatisPlusVersion', "3.3.1")
+        set('velocityEngineVersion', "2.2")
+        set('pagehelperVersion', "1.2.13")
+        set('knife4jVersion', "2.0.2")
+
+        set('redissonVersion', "3.12.4")
+        set('commonsLangVersion', "3.10")
+        set('commonsCollections4Version', "4.4")
+        set('xstreamVersion', "1.4.12")
+        set('httpclientVersion', "4.5.12")
+        set('servletVersion', "4.0.1")
+        set('servoVersion', "0.13.0")
+        set('bouncyCastleVersion', "1.69")
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "de.codecentric:spring-boot-admin-dependencies:${springBootAdminVersion}"
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+            mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:${springCloudAlibabaVersion}"
+        }
+
+        dependencies {
+            dependency "com.alibaba:druid-spring-boot-starter:${druidVersion}"
+            dependency "com.baomidou:mybatis-plus-boot-starter:${mybatisPlusVersion}"
+            dependency "com.baomidou:mybatis-plus-generator:${mybatisPlusVersion}"
+            dependency "org.apache.velocity:velocity-engine-core:${velocityEngineVersion}"
+            dependency "com.github.pagehelper:pagehelper-spring-boot-starter:${pagehelperVersion}"
+            dependency "com.github.xiaoymin:knife4j-spring-boot-starter:${knife4jVersion}"
+            dependency "com.alibaba.csp:sentinel-spring-cloud-gateway-adapter:${sentinelVersion}"
+
+            dependency "org.springframework.boot:spring-boot-starter-data-redis:${springBootVersion}"
+            dependency "org.redisson:redisson:${redissonVersion}"
+            dependency "org.apache.commons:commons-lang3:${commonsLangVersion}"
+            dependency "org.apache.commons:commons-collections4:${commonsCollections4Version}"
+            dependency "com.thoughtworks.xstream:xstream:${xstreamVersion}"
+            dependency "org.bouncycastle:bcprov-jdk15on:${bouncyCastleVersion}"
+            dependency "org.apache.httpcomponents:httpclient:${httpclientVersion}"
+            dependency "javax.servlet:javax.servlet-api:${servletVersion}"
+            dependency "com.netflix.servo:servo-core:${servoVersion}"
+        }
+    }
+
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        }
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'jacoco'
+
+    sourceCompatibility = '1.8'
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+
+        // 排除 logback 依赖（使用 log4j2）
+        implementation.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+        // 排除 tomcat 依赖（使用 undertow）
+        implementation.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+    }
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+        implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml'   // 添加 yml 依赖（用于识别 log4j2.yml 文件）
+
+        implementation 'org.springframework.boot:spring-boot-starter-undertow'
+
+        compileOnly "org.projectlombok:lombok:${lombokVersion}"
+        annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+
+        testImplementation "org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}"
+        testImplementation "org.junit.jupiter:junit-jupiter-params:${junitJupiterVersion}"
+        testImplementation "org.junit.platform:junit-platform-launcher:${junitPlatformLauncherVersion}"
+    }
+
+    test {
+        useJUnitPlatform()
+        ignoreFailures = true
+    }
+
+    /**
+     * 添加jacoco测试覆盖率
+     */
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+            csv.enabled true
+            html.enabled true
+
+            xml.destination file("${buildDir}/jacoco/coverage-reports/jacoco.xml")
+            csv.destination file("${buildDir}/jacoco/coverage-reports/jacoco.csv")
+            html.destination file("${buildDir}/jacoco/coverage-reports/html")
+        }
+    }
+    tasks.check.dependsOn jacocoTestReport
+
+    /**
+     * clean 命令时删除 logs 目录
+     */
+    task cleanOutDir(type: Delete) {
+        delete "${projectDir}/logs"
+        delete "${rootDir}/logs"
+    }
+    tasks.clean.dependsOn(cleanOutDir)
+
+    /**
+     * 该过滤器会导致resource下文件编码错误
+     * 根据环境打包默认dev开发环境，命令：./gradlew -x test clean bootJar -Denv=dev
+     */
+    /*
+    def env = System.getProperty("env") ?: "dev"
+    processResources {
+        filter org.apache.tools.ant.filters.ReplaceTokens, tokens: [env: env]
+    }
+    */
+}

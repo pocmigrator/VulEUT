@@ -1,0 +1,95 @@
+#   Copyright 2019 Yanzheng (https://github.com/micyo202). All rights reserved.
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#spring:
+#  http:
+#    encoding:
+#      force-response: on
+#  #允许相同名称的 bean 覆盖
+#  #main:
+#    #allow-bean-definition-overriding: on
+#  cloud:
+#    gateway:
+#      # 配置路由规则
+#      routes:
+#        - id: lion-auth
+#          uri: lb://lion-auth
+#          predicates:
+#            - Path=/auth/**
+#          filters:
+#            - StripPrefix=1
+#            - PreserveHostHeader
+#
+#        - id: lion-auth-login
+#          uri: lb://lion-auth
+#          predicates:
+#            - Path=/login
+#          filters:
+#            - PreserveHostHeader
+#
+#        - id: lion-auth-authorize
+#          uri: lb://lion-auth
+#          predicates:
+#            - Path=/oauth/authorize
+#          filters:
+#            - PreserveHostHeader
+#
+#        - id: lion-demo-provider
+#          uri: lb://lion-demo-provider
+#          predicates:
+#            - Path=/demo/provider/**
+#          filters:
+#            - StripPrefix=2
+#            - PreserveHostHeader
+#
+#        - id: lion-demo-consumer
+#          uri: lb://lion-demo-consumer
+#          predicates:
+#            - Path=/demo/consumer/**
+#          filters:
+#            - StripPrefix=2
+#            - PreserveHostHeader
+#
+#    sentinel:
+#      transport:
+#        dashboard: ${SENTINEL_DASHBOARD:localhost:8858}
+#  rabbitmq:
+#    host: ${RABBIT_MQ_HOST:localhost}
+#    port: ${RABBIT_MQ_PORT:5672}
+#    username: ${RABBIT_MQ_USERNAME:guest}
+#    password: ${RABBIT_MQ_PASSWORD:guest}
+#  sleuth:
+#    sampler:
+#      probability: 1.0
+#  zipkin:
+#    #base-url: ${ZIPKIN_URL:http://localhost:9411}
+#    sender:
+#      type: rabbit
+#  redis:
+#    host: ${REDIS_HOST:localhost}
+#    port: ${REDIS_PORT:6379}
+#    password: ${REDIS_PASSWORD:lion}
+#
+##开启sentinel断路器
+#feign:
+#  sentinel:
+#    enabled: on
+#
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: '*'
+#  endpoint:
+#    health:
+#      show-details: always

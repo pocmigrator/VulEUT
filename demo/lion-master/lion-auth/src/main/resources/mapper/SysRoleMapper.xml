@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~   Copyright 2019 Yanzheng (https://github.com/micyo202). All rights reserved.
+  ~
+  ~   Licensed under the Apache License, Version 2.0 (the "License");
+  ~   you may not use this file except in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~       http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~   Unless required by applicable law or agreed to in writing, software
+  ~   distributed under the License is distributed on an "AS IS" BASIS,
+  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~   See the License for the specific language governing permissions and
+  ~   limitations under the License.
+  -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lion.auth.mapper.SysRoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lion.auth.entity.SysRole">
+    <result column="id" property="id" />
+    <result column="valid" property="valid" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+    </resultMap>
+
+    <!-- 根据用户ID获取角色列表信息 -->
+    <select id="getRoleByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        SELECT r.*
+        FROM sys_role r, sys_user_role ur
+        WHERE r.id = ur.role_id
+            AND r.valid = 1
+            AND ur.valid = 1
+            AND ur.user_id = #{0}
+    </select>
+
+</mapper>

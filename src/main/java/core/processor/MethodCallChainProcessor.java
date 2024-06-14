@@ -27,8 +27,51 @@ public class MethodCallChainProcessor {
         // m3, m5, m8
         List<PMethod> vulCodePMethodList = buildVulCodePMethodList();
         Map<PMethod, List<PMethod>> pMethodListMap = buildCallMethodMap(vulCodePMethodList);
-        List<MethodCallTree> methodCallTrees = buildMethodCallTreeList(vulCodePMethodList, pMethodListMap);
+        List<MethodCallTree> methodCallTrees = Lists.newArrayList();
+        for (PMethod pMethod : vulCodePMethodList) {
+            MethodCallTree vulCodeMethodCallTree = new MethodCallTree();
+            vulCodeMethodCallTree.setParent(null);
+            vulCodeMethodCallTree.setMethod(pMethod);
+            methodCallTrees.add(vulCodeMethodCallTree);
+            Stack<MethodCallTree> stack = new Stack<>();
+            stack.push(vulCodeMethodCallTree);
+            GraphBuild graphBuild = new GraphBuild();
+            CallGraph edges;
+            try {
+                edges = graphBuild.buildGraph(pMethod.getTree().getText(), pMethod.getClassName());
+                while (!stack.isEmpty()) {
+                    MethodCallTree pop = stack.pop();
+                    CallGraph finalEdges = edges;
+                    List<MethodCallTree> callTrees = pMethodListMap.getOrDefault(pop.getMethod(), Lists.newArrayList()).stream()
+                            .map(x -> MethodCallTree.builder()
+                                    .parent(pop)
+                                    .method(x)
+                                    .edges(finalEdges)
+                                    .build())
+                            .collect(Collectors.toList());
+                    pop.setChildren(callTrees);
 
+                    stack.addAll(callTrees);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                // default
+                while (!stack.isEmpty()) {
+                    MethodCallTree pop = stack.pop();
+                    List<MethodCallTree> callTrees = pMethodListMap.getOrDefault(pop.getMethod(), Lists.newArrayList()).stream()
+                            .map(x -> MethodCallTree.builder()
+                                    .parent(pop)
+                                    .method(x)
+                                    .build())
+                            .collect(Collectors.toList());
+                    pop.setChildren(callTrees);
+
+                    stack.addAll(callTrees);
+                }
+            }
+        }
+
+        Log.info("buildMethodCallTreeList end");
         // m1 - m2 - m3, m4 - m5, m6 - m7 - m8
         List<List<PMethod>> list = Lists.newArrayList();
         for (MethodCallTree methodCallTree : methodCallTrees) {
@@ -216,8 +259,8 @@ public class MethodCallChainProcessor {
             vulCodeMethodCallTree.setMethod(pMethod);
             methodCallTrees.add(vulCodeMethodCallTree);
 
-//            GraphBuild graphBuild = new GraphBuild();
-//            CallGraph edges = graphBuild.buildGraph(pMethod.getTree().getText(), pMethod.getClassName());
+            GraphBuild graphBuild = new GraphBuild();
+            CallGraph edges = graphBuild.buildGraph(pMethod.getTree().getText(), pMethod.getClassName());
 
             Stack<MethodCallTree> stack = new Stack<>();
             stack.push(vulCodeMethodCallTree);
@@ -227,6 +270,7 @@ public class MethodCallChainProcessor {
                         .map(x -> MethodCallTree.builder()
                                 .parent(pop)
                                 .method(x)
+                                .edges(edges)
                                 .build())
                         .collect(Collectors.toList());
                 pop.setChildren(callTrees);
@@ -248,6 +292,7 @@ public class MethodCallChainProcessor {
         PMethod method;
         MethodCallTree parent;
         List<MethodCallTree> children;
+        CallGraph edges;
     }
 }
 
