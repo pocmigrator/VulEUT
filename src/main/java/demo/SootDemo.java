@@ -1,11 +1,11 @@
+package demo;
+
 import soot.*;
 import soot.options.Options;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.util.dot.DotGraph;
 
-import java.io.File;
-
-public class SootDemo1 {
+public class SootDemo {
 
     public static void main(String[] args) {
         // Initialize Soot
@@ -20,20 +20,11 @@ public class SootDemo1 {
 
         // Add the directory containing your source code to Soot's classpath
         String classPath = "/Users/gaoyi/IdeaProjects/LLMPocMigration/src/main/java";
+        // For Java 9 and above, add the module path
+        Options.v().set_soot_classpath(classPath + ":" + System.getProperty("java.home") + "/jmods");
 
-        // Get JAVA_HOME and construct the module path for JDK 9+
-        String javaHome = System.getProperty("java.home");
-        System.out.println("JAVA_HOME: " + javaHome);
-
-        // Since java.ext.dirs is null in Java 9+, we manually add necessary paths
-        String jmodsPath = javaHome + "/jmods";
-        System.out.println("jmods path: " + jmodsPath);
-
-        // Manually specify the paths to ensure all required libraries are included
-        String sootClasspath = classPath + File.pathSeparator + jmodsPath;
-
-        // Set Soot classpath to include the source path and the jmods path
-        Options.v().set_soot_classpath(sootClasspath);
+        // Set the Java home path
+        System.setProperty("java.home", "/Library/Java/JavaVirtualMachines/jdk-9.0.4.jdk/Contents/Home");
 
         // Specify the fully-qualified class name to be analyzed
         String className = "utils.CallUtil";

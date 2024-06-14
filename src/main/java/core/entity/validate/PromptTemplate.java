@@ -23,6 +23,7 @@ public interface PromptTemplate {
     String hint10 = "After declaring test input data, you need to call the following statement:";
 
     String hint11 = "The assert statement to verify that the vulnerability was successfully triggered is fixed as:\n" +
-            "assertTrue(MethodCallInterceptor.isTrigger);";
+            "assertTrue(MethodCallInterceptor.isTriggered());\n" +
+            "assertTrue(MethodCallInterceptor.isConditionMet());";
 }
 

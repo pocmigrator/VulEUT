@@ -22,7 +22,7 @@ public class MethodCallInterceptor {
         TMock.AClass aClass = new TMock.AClass();
         aClass.func1(input);
 
-        System.out.println(MethodCallInterceptor.isTrigger);
+
     }
 
 

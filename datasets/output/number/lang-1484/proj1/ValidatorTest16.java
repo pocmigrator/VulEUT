@@ -20,6 +20,7 @@ public class ValidatorTest {
         boolean result = validator.validateShort(input);
 
         // Verify that the vulnerability was triggered by checking MethodCallInterceptor.isTrigger
-        assertTrue(MethodCallInterceptor.isTrigger);
+        assertTrue(MethodCallInterceptor.isTriggered());
+assertTrue(MethodCallInterceptor.isConditionMet());
     }
 }

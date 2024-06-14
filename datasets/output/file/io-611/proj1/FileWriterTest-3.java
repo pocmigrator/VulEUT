@@ -19,7 +19,8 @@ public class FileWriterTest {
             new FileWriter(input);
 
             // Assert that the vulnerability was successfully triggered
-            assertTrue(MethodCallInterceptor.isTrigger);
+            assertTrue(MethodCallInterceptor.isTriggered());
+            assertTrue(MethodCallInterceptor.isConditionMet());
         } catch (Exception e) {
             // Exception handling, if needed
         }
