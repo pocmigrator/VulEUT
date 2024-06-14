@@ -4,8 +4,10 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import core.entity.analysis.*;
+import core.entity.analysis.graph.GraphBuild;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
+import soot.jimple.toolkits.callgraph.CallGraph;
 import utils.Log;
 import utils.TaskParamReader;
 
@@ -206,7 +208,6 @@ public class MethodCallChainProcessor {
         return list;
     }
 
-
     private List<MethodCallTree> buildMethodCallTreeList(List<PMethod> vulCodePMethodList, Map<PMethod, List<PMethod>> pMethodListMap) {
         List<MethodCallTree> methodCallTrees = Lists.newArrayList();
         for (PMethod pMethod : vulCodePMethodList) {
@@ -214,6 +215,9 @@ public class MethodCallChainProcessor {
             vulCodeMethodCallTree.setParent(null);
             vulCodeMethodCallTree.setMethod(pMethod);
             methodCallTrees.add(vulCodeMethodCallTree);
+
+//            GraphBuild graphBuild = new GraphBuild();
+//            CallGraph edges = graphBuild.buildGraph(pMethod.getTree().getText(), pMethod.getClassName());
 
             Stack<MethodCallTree> stack = new Stack<>();
             stack.push(vulCodeMethodCallTree);

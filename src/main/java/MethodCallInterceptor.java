@@ -9,10 +9,20 @@ import java.util.Arrays;
 import static net.bytebuddy.matcher.ElementMatchers.named;
 
 public class MethodCallInterceptor {
-    public static boolean isTrigger = false;
+    public static boolean isTriggered = false;
+    public static boolean areConditionsMet = false;
 
 
-    public static void interceptor(Class thdClass, String methodName, Object[] args){
+    public static boolean isTriggered() {
+        return isTriggered;
+    }
+
+    public static boolean areConditionsMet() {
+        return areConditionsMet;
+    }
+
+
+    public static void interceptor(Class thdClass, String methodName, Object[] args) {
         ByteBuddyAgent.install();
         interceptMethodCalls(thdClass, methodName, args);
     }
@@ -32,14 +42,18 @@ public class MethodCallInterceptor {
             e.printStackTrace();
         }
     }
+
     public static class MethodCallLogger {
         public static String targetMethodName;
         public static Object[] targetArgs;
 
         @Advice.OnMethodEnter
         public static void enter(@Advice.Origin String methodName, @Advice.AllArguments Object[] args) {
-            if(methodName.contains(targetMethodName) && Arrays.equals(targetArgs, args)){
-                isTrigger = true;
+            if (methodName.contains(targetMethodName)) {
+                isTriggered = true;
+            }
+            if (Arrays.equals(targetArgs, args)) {
+                areConditionsMet = true;
             }
         }
     }

@@ -1,5 +1,5 @@
 # VulEUT
-> This is the basic implementation of our submission in ISSTA 2024: Test Guided Exploitability Verification of Library Vulnerabilities.
+> This is the basic implementation of our submission in ICSE 2025: Vulnerability-Triggering Test Case Generation from Third-Party Libraries.
 - [Description](#Description)
 - [Project Structure](#ProjectStructure)
 - [Datasets](#Datasets)
@@ -13,7 +13,7 @@ vulnerabilities within these libraries. Existing automated vulnerability detecti
 accurately assess the propagation of inputs capable of triggering
 vulnerabilities from client projects to vulnerable code. In this paper,
 we propose a novel approach called VulEUT (Vulnerability Exploit
-Unit Test Generation), which combines vulnerability exploitation
+Unit Test Generation),  which combines vulnerability exploitation
 reachability analysis and LLM-based unit test generation. VulEUT
 is designed to automatically verify the exploitability of vulnerabilities in third-party libraries commonly used in client software
 projects. VulEUT first analyzes the client projects to determine the
@@ -72,7 +72,8 @@ A generated test may look like this:
         e.printStackTrace();
     }
     // Verify if a call to the XStream.fromXML method was triggered
-    assertTrue(MethodCallInterceptor.isTrigger);
+    assertTrue(MethodCallInterceptor.isTriggered());
+    assertTrue(MethodCallInterceptor.isConditonMet());
 }
 ```
 ## Environment

@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 public class XmlUtilTest {
     @Test
     public void testXml2ObjCallsVulnerabilityMethod() {
-        File file = new File("/Users/gaoyi/IdeaProjects/LLMPocMigration/dataset/poc/cve/poc.xml");
+        File file = new File("/dataset/poc/cve/poc.xml");
         String xmlData = "<void>";
         // Set up an interceptor to detect calls to the XStream.fromXML method
         MethodCallInterceptor.interceptor(

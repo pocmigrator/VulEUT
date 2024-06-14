@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PromptGenerator {
+    static String input_split = "&&AND&&";
     private VulCodeReachableProcessor vulCodeReachableProcessor = new VulCodeReachableProcessor();
 
     public List<String> generatePrompts() {
@@ -64,8 +65,16 @@ public class PromptGenerator {
             promptStringBuilder.append("class name:").append(promptModel.getVulClass()).append("\n");
             promptStringBuilder.append("method name:").append(promptModel.getVulMethod()).append("\n\n");
 
-            promptStringBuilder.append(PromptTemplate.hint9).append("\n");
-            promptStringBuilder.append(promptModel.getPocInput()).append("\n\n");
+
+            String[] split = promptModel.getPocInput().split(input_split);
+            for (int i = 0; i < split.length; i++) {
+                String input = split[i];
+                String originHint = PromptTemplate.hint9;
+                String replaceHint = originHint.replace("input", "input" + (i + 1)).trim();
+                promptStringBuilder.append(replaceHint).append("\n");
+                promptStringBuilder.append(input).append("\n\n");
+            }
+
             if (StringUtils.isNotBlank(promptModel.getPocDescription())) {
                 promptStringBuilder.append(promptModel.getPocDescription()).append("\n\n");
             }

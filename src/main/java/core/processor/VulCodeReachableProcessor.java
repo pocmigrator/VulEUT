@@ -91,6 +91,8 @@ public class VulCodeReachableProcessor {
         // default
         result.setReachable(false);
 
+        Log.info("chain result :"+ result);
+
         return result;
     }
 
