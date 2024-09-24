@@ -1,5 +1,5 @@
 # VulEUT
-> This is the basic implementation of our submission in ICSE 2025: Vulnerability-Triggering Test Case Generation from Third-Party Libraries.
+> This is the basic implementation of our submission: Vulnerability-Triggering Test Case Generation from Third-Party Libraries.
 - [Description](#Description)
 - [Project Structure](#ProjectStructure)
 - [Datasets](#Datasets)
